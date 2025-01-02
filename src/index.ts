@@ -5,12 +5,16 @@ import type { Request } from 'express';
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import { readFileSync } from 'fs';
+import { resolvers } from './graphql/resolvers/resolvers.js';
 
 import userRouter from "./routers/userRouter.js";
 
+const typeDefs = readFileSync('./src/graphql/schema.graphql', { encoding: 'utf-8' });
+
+
 const port = process.env.PORT || 8080;
 const app = express();
-
 const httpServer = http.createServer(app);
 
 app.use(urlencoded({ extended: true }));
@@ -21,17 +25,10 @@ app.get("/", (req, res) => {
   res.status(200).json({ msg: "Server is up and running" });
 });
 
+
 const server = new ApolloServer({
-  typeDefs: `
-    type Query {
-      hello: String
-    }
-  `,
-  resolvers: {
-    Query: {
-      hello: () => "Hello, world!",
-    },
-  },
+  typeDefs,
+  resolvers,
   introspection: process.env.PROJECT_ENV === "DEV",
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
 });
