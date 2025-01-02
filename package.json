@@ -1,0 +1,27 @@
+{
+  "name": "typescript-express-server",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "keywords": [],
+  "author": "Nick Foden",
+  "license": "ISC",
+  "description": "",
+  "scripts": {
+    "dev": "node --env-file=.env --loader=ts-node/esm --watch src/**",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.11.2",
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
